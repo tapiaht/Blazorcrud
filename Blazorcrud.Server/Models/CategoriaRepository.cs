@@ -4,28 +4,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blazorcrud.Server.Models
 {
-    public class UploadRepository : IUploadRepository
+    public class CategoriaRepository : ICategoriaRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public UploadRepository(AppDbContext appDbContext)
+        public CategoriaRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public async Task<Upload> AddUpload(Upload upload)
+        public async Task<Categoria> AddUpload(Categoria upload)
         {
-            var result = await _appDbContext.Uploads.AddAsync(upload);
+            var result = await _appDbContext.Categoria.AddAsync(upload);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;
         }
 
-        public async Task<Upload?> DeleteUpload(int Id)
+        public async Task<Categoria?> DeleteUpload(int Id)
         {
-            var result = await _appDbContext.Uploads.FirstOrDefaultAsync(u => u.Id==Id);
+            var result = await _appDbContext.Categoria.FirstOrDefaultAsync(u => u.Id==Id);
             if (result!=null)
             {
-                _appDbContext.Uploads.Remove(result);
+                _appDbContext.Categoria.Remove(result);
                 await _appDbContext.SaveChangesAsync();
             }
             else
@@ -35,9 +35,9 @@ namespace Blazorcrud.Server.Models
             return result;
         }
 
-        public async Task<Upload?> GetUpload(int Id)
+        public async Task<Categoria?> GetUpload(int Id)
         {
-            var result = await _appDbContext.Uploads.FirstOrDefaultAsync(u => u.Id==Id);
+            var result = await _appDbContext.Categoria.FirstOrDefaultAsync(u => u.Id==Id);
             if(result != null)
             {
                 return result;
@@ -48,28 +48,28 @@ namespace Blazorcrud.Server.Models
             }
         }
 
-        public PagedResult<Upload> GetUploads(string? name, int page)
+        public PagedResult<Categoria> GetUploads(string? name, int page)
         {
             int pageSize = 5;
 
             if (name != null)
             {
-                return _appDbContext.Uploads
-                    .Where(u => u.FileName.Contains(name, StringComparison.CurrentCultureIgnoreCase))
-                    .OrderBy(u => u.UploadTimestamp)
+                return _appDbContext.Categoria
+                    .Where(u => u.Nombre.Contains(name, StringComparison.CurrentCultureIgnoreCase))
+                    .OrderBy(u => u.Foto)
                     .GetPaged(page, pageSize);
             }
             else
             {
-                return _appDbContext.Uploads
-                    .OrderBy(u => u.UploadTimestamp)
+                return _appDbContext.Categoria
+                    .OrderBy(u => u.Foto)
                     .GetPaged(page, pageSize);
             }
         }
 
-        public async Task<Upload?> UpdateUpload(Upload upload)
+        public async Task<Categoria?> UpdateUpload(Categoria upload)
         {
-            var result = await _appDbContext.Uploads.FirstOrDefaultAsync(u => u.Id==upload.Id);
+            var result = await _appDbContext.Categoria.FirstOrDefaultAsync(u => u.Id==upload.Id);
             if (result!=null)
             {
                 // Update existing upload

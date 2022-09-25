@@ -11,8 +11,7 @@ namespace Blazorcrud.Server.Models
         }
 
         public DbSet<Noticia> Noticia => Set<Noticia>();
-        public DbSet<Address> Addresses => Set<Address>();
-        public DbSet<Upload> Uploads => Set<Upload>();
+        public DbSet<Categoria> Categoria => Set<Categoria>();
         public DbSet<User> Users => Set<User>();
     }
 }

@@ -1,7 +1,7 @@
 @page "/upload/createupload"
 @attribute [Authorize]
 @inject IAlertService AlertService
-@inject IUploadService UploadService
+@inject ICategoriaService UploadService
 @inject NavigationManager navManager
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
@@ -9,20 +9,20 @@
 <br/>
 
 <EditForm Model="@upload" OnValidSubmit="@CreateUpload">
-    <FluentValidator TValidator="UploadValidator" />
+    <FluentValidator TValidator="CategoriaValidator" />
     <div class="form-group">
-        <label>File Name :</label>
+        <label>Nombre:</label>
         <div>
-            <InputText @bind-Value="@upload.FileName" class="form-control col-sm-3" />
-            <ValidationMessage For="@(() => upload.FileName)" />
+            <InputText @bind-Value="@upload.Nombre" class="form-control col-sm-3" />
+            <ValidationMessage For="@(() => upload.Nombre)" />
         </div>
     </div>
     <div class="form-group ">
         <div>
-            <label>File:</label>
+            <label>Foto:</label>
             <div>
                 <InputFile accept=".json" class="form-control-file" type="file" OnChange="HandleSelection" />
-                <ValidationMessage For="@(() => upload.FileContent)" />
+                <ValidationMessage For="@(() => upload.Foto)" />
             </div>
         </div>
     </div>
@@ -51,11 +51,10 @@
     bool loading = false;
     string status = "File pending upload...";
     
-    Upload upload = new Upload
+    Categoria upload = new Categoria
     {
-        FileName = "",
-        UploadTimestamp = DateTime.Now,
-        ProcessedTimestamp = null
+        Nombre = "",
+            Foto= "",
     };
 
     async Task HandleSelection(InputFileChangeEventArgs e)
@@ -67,7 +66,7 @@
             var buffer = new byte[file.Size];
             await file.OpenReadStream().ReadAsync(buffer);
             status = $"Finished loading {file.Size} bytes from {file.Name}";
-            upload.FileContent = Convert.ToBase64String(buffer);
+            upload.Foto = Convert.ToBase64String(buffer);
         }
     }
 

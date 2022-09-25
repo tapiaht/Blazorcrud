@@ -1,17 +1,17 @@
 @page "/upload/{Page}"
-@inject Services.IUploadService UploadService
+@inject Services.ICategoriaService UploadService
 @inject Services.IUserService UserService
 @inject Microsoft.AspNetCore.Components.NavigationManager UriHelper
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
-<h1>Uploads</h1>
+<h1>Categorias</h1>
 <br/>
 
 <div class="row mb-3">
     <div class="col-md-7">
         @if(LoggedIn)
         {
-            <NavLink href="/upload/createupload" class="btn btn-sm btn-success mb-2">Add Upload</NavLink>
+            <NavLink href="/upload/createupload" class="btn btn-sm btn-success mb-2">Add Categoria</NavLink>
         }
     </div>
     <div class="input-group col-md-5 text-md-right">
@@ -38,7 +38,7 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <th style="width:35%">File Name</th>
+                <th style="width:35%">Nombre</th>
                 <th style="width:30%">Uploaded</th>
                 <th style="width:30%">Processed</th>
                 <th style="width:5%"></th>
@@ -48,9 +48,8 @@ else
             @foreach (var upload in uploads.Results)
             {
                 <tr>
-                    <td>@upload.FileName</td>
-                    <td>@upload.UploadTimestamp</td>
-                    <td>@upload.ProcessedTimestamp</td>
+                    <td>@upload.Nombre</td>
+                    <td>@upload.Foto</td>
                     <td style="white-space: nowrap">
                         <NavLink href="@($"/upload/viewupload/{upload.Id}")" class="oi oi-eye text-primary mr-3 nounderline"></NavLink>
                     </td>
@@ -66,7 +65,7 @@ else
     public string Page { get; set;} = "1";
     [Parameter]
     public string SearchTerm { get; set; } = string.Empty;
-    protected PagedResult<Upload> uploads;
+    protected PagedResult<Categoria> uploads;
 
     public bool LoggedIn
     {

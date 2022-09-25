@@ -38,7 +38,6 @@ namespace Blazorcrud.Server.Models
         public async Task<Noticia?> GetPerson(int noticiaId)
         {
             var result = await _appDbContext.Noticia
-                .Include(p => p.Addresses)
                 .FirstOrDefaultAsync(p => p.NoticiaId == noticiaId);
             if (result != null)
             {
@@ -60,14 +59,12 @@ namespace Blazorcrud.Server.Models
                     .Where(p => p.Titulo.Contains(name, StringComparison.CurrentCultureIgnoreCase) ||
                         p.Body.Contains(name, StringComparison.CurrentCultureIgnoreCase))
                     .OrderBy(p => p.NoticiaId)
-                    .Include(p => p.Addresses)
                     .GetPaged(page, pageSize);
             }
             else
             {
                 return _appDbContext.Noticia
                     .OrderBy(p => p.NoticiaId)
-                    .Include(p => p.Addresses)
                     .GetPaged(page, pageSize);
             }
         }
@@ -80,34 +77,7 @@ namespace Blazorcrud.Server.Models
                 // Update existing person
                 _appDbContext.Entry(result).CurrentValues.SetValues(person);
                 
-                // Remove deleted addresses
-                foreach (var existingAddress in result.Addresses.ToList())
-                {
-                   if(!person.Addresses.Any(o => o.AddressId == existingAddress.AddressId))
-                     _appDbContext.Addresses.Remove(existingAddress);
-                }
-
-                // Update and Insert Addresses
-                 foreach (var addressModel in person.Addresses)
-                 {
-                    var existingAddress = result.Addresses
-                        .Where(a => a.AddressId == addressModel.AddressId)
-                        .SingleOrDefault();
-                    if (existingAddress != null)
-                        _appDbContext.Entry(existingAddress).CurrentValues.SetValues(addressModel);
-                    else
-                    {
-                        var newAddress = new Address
-                        {
-                            AddressId = addressModel.AddressId,
-                            Street = addressModel.Street,
-                            City = addressModel.City,
-                            State = addressModel.State,
-                            ZipCode = addressModel.ZipCode
-                        };
-                        result.Addresses.Add(newAddress);
-                    }
-                }
+                
                 await _appDbContext.SaveChangesAsync();
             }
             else

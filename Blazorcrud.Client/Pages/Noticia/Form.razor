@@ -62,13 +62,13 @@
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
 
-    public void OnAddressDelete(Noticia person, Address address)
+    public void OnAddressDelete(Noticia person)
     {
-        person.Addresses.Remove(address);
+        //person.Addresses.Remove(address);
     }
 
     public void OnAddressAdd(Noticia person)
     {
-        person.Addresses.Add(new Address { Street = "", City = "", State = "", ZipCode="" });
+        //person.Addresses.Add(new Address { Street = "", City = "", State = "", ZipCode="" });
     }
 }

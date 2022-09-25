@@ -14,7 +14,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("BlazorServerCRUD"));
 builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
-builder.Services.AddScoped<IUploadRepository, UploadRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddQuartz(q =>
 {
     q.UseMicrosoftDependencyInjectionJobFactory();
-    q.AddJobAndTrigger<UploadProcessorJob>(builder.Configuration);
+    //q.AddJobAndTrigger<UploadProcessorJob>(builder.Configuration);
 });
 builder.Services.AddQuartzHostedService(
     q => q.WaitForJobsToComplete = true);

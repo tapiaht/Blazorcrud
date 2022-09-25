@@ -8,7 +8,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<INoticiaService, NoticiaService>();
-builder.Services.AddScoped<IUploadService, UploadService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IHttpService, HttpService>();

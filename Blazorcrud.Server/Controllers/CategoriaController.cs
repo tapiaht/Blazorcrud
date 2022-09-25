@@ -8,11 +8,11 @@ namespace Blazorcrud.Server.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UploadController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
-        private readonly IUploadRepository _uploadRepository;
+        private readonly ICategoriaRepository _uploadRepository;
 
-        public UploadController(IUploadRepository uploadRepository)
+        public CategoriaController(ICategoriaRepository uploadRepository)
         {
             _uploadRepository = uploadRepository;
         }
@@ -41,7 +41,7 @@ namespace Blazorcrud.Server.Controllers
         /// Creates an upload with base64 encoded file
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult> AddUpload(Upload upload)
+        public async Task<ActionResult> AddUpload(Categoria upload)
         {
             return Ok(await _uploadRepository.AddUpload(upload));
         }
@@ -50,7 +50,7 @@ namespace Blazorcrud.Server.Controllers
         /// Updates an upload with a specific Id.
         /// </summary>
         [HttpPut]
-        public async Task<ActionResult> UpdateUpload(Upload upload)
+        public async Task<ActionResult> UpdateUpload(Categoria upload)
         {
             return Ok(await _uploadRepository.UpdateUpload(upload));
         }

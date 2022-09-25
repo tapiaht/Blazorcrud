@@ -1,10 +1,10 @@
 @page "/upload/viewupload/{id}"
-@inject IUploadService UploadService
+@inject ICategoriaService UploadService
 @inject NavigationManager navManager
 @inject IJSRuntime JSRuntime
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
-<h1>View Upload</h1>
+<h1>View Categoria</h1>
 <br/>
 
 <table class="table col-md-6">
@@ -14,8 +14,10 @@
             <td>@upload.Id</td>
         </tr>
         <tr>
-            <th scope="row">Uploaded At</th>
-            <td>@upload.UploadTimestamp</td>
+            <th scope="row">Nombre</th>
+            <td>@upload.Nombre</td>
+            <th scope="row">Foto</th>
+            <td>@upload.Foto</td>
         </tr>
  
     </tbody>
@@ -34,7 +36,7 @@
     [Parameter]
     public string Id { get; set; }
 
-    Upload upload = new Upload();
+    Categoria upload = new Categoria();
     
     protected async override Task OnParametersSetAsync()
     {
