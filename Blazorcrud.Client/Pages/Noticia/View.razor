@@ -1,0 +1,60 @@
+@page "/person/viewperson/{id}"
+@inject INoticiaService PersonService
+@inject NavigationManager navManager
+@inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
+
+<h1>View Person</h1>
+<br/>
+
+<table class="table col-md-6">
+    <tbody>
+        <tr>
+            <th scope="row">Id</th>
+            <td>@person.PersonId</td>
+        </tr>
+        <tr>
+            <th scope="row">First Name</th>
+            <td>@person.FirstName</td>
+        </tr>
+        <tr>
+            <th scope="row">Last Name</th>
+            <td>@person.LastName</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Phone Number</th>
+            <td>@person.PhoneNumber</td>
+        </tr>
+    </tbody>
+</table>
+
+>
+
+
+<div class="form-group">
+    @if (PageHistoryState.CanGoBack()){
+        <NavLink href="@PageHistoryState.GetGoBackPage()" class="btn btn-link">Back</NavLink>
+    }
+    else{
+        <NavLink href="/person/1" class="btn btn-link">Back</NavLink>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    Noticia person = new Noticia
+    {
+        FirstName = "",
+        LastName = "",
+
+        PhoneNumber = "",
+      
+    };
+    
+    protected async override Task OnParametersSetAsync()
+    {
+       person = await PersonService.GetPerson(int.Parse(Id));
+    }
+}

@@ -1,0 +1,74 @@
+@inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
+
+<EditForm Model="@person" OnValidSubmit="@OnValidSubmit">
+    <FluentValidator TValidator="PersonValidator" />
+    <div class="form-group">
+        <label>Titulo :</label>
+        <div>
+            <InputText @bind-Value="@person.FirstName" class="form-control col-sm-3" />
+            <ValidationMessage For="@(() => person.FirstName)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Body :</label>
+        <div>
+            <InputText @bind-Value="@person.LastName" class="form-control col-sm-3" />
+            <ValidationMessage For="@(() => person.LastName)" />
+        </div>
+    </div>
+    
+    <div class="form-group ">
+        <div>
+            <label>Categoria  :</label>
+            <div>
+                <InputText @bind-Value="@person.PhoneNumber" class="form-control col-sm-3" />
+                <ValidationMessage For="@(() => person.PhoneNumber)" />
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+    
+
+    
+    
+  
+
+    <div class="form-group">
+        <button disabled="@loading" class="btn btn-primary">
+            @if (loading) 
+            {
+                <span class="spinner-border spinner-border-sm mr-1"></span>
+            }
+            @ButtonText
+        </button>
+        @if (PageHistoryState.CanGoBack()){
+            <NavLink href="@PageHistoryState.GetGoBackPage()" class="btn btn-link">Cancel</NavLink>
+        }
+        else{
+            <NavLink href="/person/1" class="btn btn-link">Back</NavLink>
+        }
+    </div>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public Noticia person { get; set; }
+    [Parameter]
+    public string ButtonText { get; set; } = "Save";
+    [Parameter]
+    public bool loading {get; set;} = false;
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    public void OnAddressDelete(Noticia person, Address address)
+    {
+        person.Addresses.Remove(address);
+    }
+
+    public void OnAddressAdd(Noticia person)
+    {
+        person.Addresses.Add(new Address { Street = "", City = "", State = "", ZipCode="" });
+    }
+}
