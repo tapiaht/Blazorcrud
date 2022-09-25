@@ -15,7 +15,7 @@
         }
     </div>
     <div class="input-group col-md-5 text-md-right">
-        <input name="PersonSearchInput" type="text" class="form-control" placeholder="Person Name" @bind="this.SearchTerm" @onkeyup="SearchBoxKeyPress" />
+        <input name="PersonSearchInput" type="text" class="form-control" placeholder="Titulo" @bind="this.SearchTerm" @onkeyup="SearchBoxKeyPress" />
         <div class="input-group-btn">
             <button name="PersonSearchButton" class="btn btn-default" @onclick="SearchClick">
                 <i class="oi oi-magnifying-glass" title="search" aria-hidden="true"></i>
@@ -49,15 +49,15 @@ else
             @foreach (var person in people.Results)
             {
                 <tr>
-                    <td>@person.FirstName</td>
-                    <td>@person.LastName</td>
-                  
-                    <td>@person.PhoneNumber</td>
+                    <td>@person.Titulo</td>
+                    <td>@person.Body</td>
+
+                    <td>@person.IdCategoria</td>
                     <td style="white-space: nowrap">
-                        <NavLink href="@($"/person/viewperson/{person.PersonId}")" class="oi oi-eye text-primary mr-3 nounderline"></NavLink>
+                        <NavLink href="@($"/person/viewperson/{person.NoticiaId}")" class="oi oi-eye text-primary mr-3 nounderline"></NavLink>
                         @if (LoggedIn)
                         {
-                            <NavLink href="@($"/person/updateperson/{person.PersonId}")" class="oi oi-pencil text-warning mr-2 nounderline"></NavLink>
+                            <NavLink href="@($"/person/updateperson/{person.NoticiaId}")" class="oi oi-pencil text-warning mr-2 nounderline"></NavLink>
                             
                                 @if (person.IsDeleting) 
                                 {
@@ -141,7 +141,7 @@ else
     {
         var person = _person;
         person.IsDeleting = true;
-        await PersonService.DeletePerson(person.PersonId);
+        await PersonService.DeletePerson(person.NoticiaId);
         people = await PersonService.GetPeople(null, Page);
         StateHasChanged();
     }

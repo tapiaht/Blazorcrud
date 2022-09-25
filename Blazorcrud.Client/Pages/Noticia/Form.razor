@@ -1,19 +1,19 @@
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
 <EditForm Model="@person" OnValidSubmit="@OnValidSubmit">
-    <FluentValidator TValidator="PersonValidator" />
+    <FluentValidator TValidator="NoticiaValidator" />
     <div class="form-group">
         <label>Titulo :</label>
         <div>
-            <InputText @bind-Value="@person.FirstName" class="form-control col-sm-3" />
-            <ValidationMessage For="@(() => person.FirstName)" />
+            <InputText @bind-Value="@person.Titulo" class="form-control col-sm-3" />
+            <ValidationMessage For="@(() => person.Titulo)" />
         </div>
     </div>
     <div class="form-group">
         <label>Body :</label>
         <div>
-            <InputText @bind-Value="@person.LastName" class="form-control col-sm-3" />
-            <ValidationMessage For="@(() => person.LastName)" />
+            <InputText @bind-Value="@person.Body" class="form-control col-sm-3" />
+            <ValidationMessage For="@(() => person.Body)" />
         </div>
     </div>
     
@@ -21,8 +21,8 @@
         <div>
             <label>Categoria  :</label>
             <div>
-                <InputText @bind-Value="@person.PhoneNumber" class="form-control col-sm-3" />
-                <ValidationMessage For="@(() => person.PhoneNumber)" />
+                <InputText @bind-Value="@person.IdCategoria" class="form-control col-sm-3" />
+                <ValidationMessage For="@(() => person.IdCategoria)" />
             </div>
         </div>
     </div>

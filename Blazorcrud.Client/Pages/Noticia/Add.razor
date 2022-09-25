@@ -5,10 +5,10 @@
 @inject NavigationManager navManager
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
-<h1>Create Person</h1>
+<h1>Agregar Noticia</h1>
 <br/>
 
-<Form ButtonText="Create Person" person="@person" loading="@loading"
+<Form ButtonText="Agregar Noticia" person="@person" loading="@loading"
             OnValidSubmit="@CreatePerson" />
 
 @code {
@@ -16,10 +16,10 @@
     
     Noticia person = new Noticia
     {
-        FirstName = "",
-        LastName = "",
+        Titulo = "",
+        Body = "",
 
-        PhoneNumber = "",
+            IdCategoria = "",
 
     };
     async Task CreatePerson()

@@ -19,10 +19,11 @@ namespace Blazorcrud.Server.Models
 
                     // Create new people
                     var testPeople = new Faker<Blazorcrud.Shared.Models.Noticia>()
-                        .RuleFor(p => p.FirstName, f => f.Name.FirstName())
-                        .RuleFor(p => p.LastName, f => f.Name.LastName())
+                        .RuleFor(p => p.Titulo, f => f.Lorem.Lines(1))
+                        .RuleFor(p => p.Body, f => f.Lorem.Lines(5))
                         .RuleFor(p => p.Gender, f => f.PickRandom<Gender>())
-                        .RuleFor(p => p.PhoneNumber, f => f.Phone.PhoneNumber())
+                        .RuleFor(p => p.IdCategoria, f => f.Random.Number(15).ToString()
+                        )
                         .RuleFor(p => p.Addresses, f => testAddresses.Generate(2).ToList());
                         
                     var people = testPeople.Generate(25);
@@ -36,7 +37,7 @@ namespace Blazorcrud.Server.Models
 
             if (!(appDbContext.Uploads.Any()))
             {
-                string jsonRecord = @"[{""FirstName"": ""Tim"",""LastName"": ""Bucktooth"",""Gender"": 1,""PhoneNumber"": ""717-211-3211"",
+                string jsonRecord = @"[{""FirstName"": ""Mundo perdido en america"",""LastName"": ""Estamos a unos minutos de ver .."",""Gender"": 1,""PhoneNumber"": ""2"",
                     ""Addresses"": [{""Street"": ""415 McKee Place"",""City"": ""Pittsburgh"",""State"": ""Pennsylvania"",""ZipCode"": ""15140""
                     },{ ""Street"": ""315 Gunpowder Road"",""City"": ""Mechanicsburg"",""State"": ""Pennsylvania"",""ZipCode"": ""17101""  }]}]";
                 var testUploads = new Faker<Upload>()

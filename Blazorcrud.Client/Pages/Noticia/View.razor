@@ -3,27 +3,27 @@
 @inject NavigationManager navManager
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
-<h1>View Person</h1>
+<h1>Ver Noticia</h1>
 <br/>
 
 <table class="table col-md-6">
     <tbody>
         <tr>
             <th scope="row">Id</th>
-            <td>@person.PersonId</td>
+            <td>@person.NoticiaId</td>
         </tr>
         <tr>
-            <th scope="row">First Name</th>
-            <td>@person.FirstName</td>
+            <th scope="row">Titulo</th>
+            <td>@person.Titulo</td>
         </tr>
         <tr>
-            <th scope="row">Last Name</th>
-            <td>@person.LastName</td>
+            <th scope="row">Body</th>
+            <td>@person.Body</td>
         </tr>
 
         <tr>
-            <th scope="row">Phone Number</th>
-            <td>@person.PhoneNumber</td>
+            <th scope="row">IdCategoria</th>
+            <td>@person.IdCategoria</td>
         </tr>
     </tbody>
 </table>
@@ -46,10 +46,10 @@
 
     Noticia person = new Noticia
     {
-        FirstName = "",
-        LastName = "",
+            Titulo = "",
+        Body = "",
 
-        PhoneNumber = "",
+            IdCategoria = "",
       
     };
     

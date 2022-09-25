@@ -5,10 +5,10 @@
 @inject NavigationManager navManager
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
-<h1>Edit Person</h1>
+<h1>Actualizar Noticia</h1>
 <br/>
 
-<Form ButtonText="Update Person" person="@person" loading="@loading"
+<Form ButtonText="Motificar Noticia" person="@person" loading="@loading"
             OnValidSubmit="@UpdatePerson" />
 
 @code {
@@ -19,10 +19,10 @@
 
     Noticia person = new Noticia
     {
-        FirstName = "",
-        LastName = "",
+            Titulo = "",
+        Body = "",
 
-        PhoneNumber = "",
+            IdCategoria = "",
        
     };
     

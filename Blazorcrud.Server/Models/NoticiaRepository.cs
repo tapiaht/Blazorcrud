@@ -20,9 +20,9 @@ namespace Blazorcrud.Server.Models
             return result.Entity;
         }
 
-        public async Task<Noticia?> DeletePerson(int personId)
+        public async Task<Noticia?> DeletePerson(int noticiaId)
         {
-            var result = await _appDbContext.Noticia.FirstOrDefaultAsync(p => p.PersonId==personId);
+            var result = await _appDbContext.Noticia.FirstOrDefaultAsync(p => p.NoticiaId == noticiaId);
             if (result!=null)
             {
                 _appDbContext.Noticia.Remove(result);
@@ -35,11 +35,11 @@ namespace Blazorcrud.Server.Models
             return result;
         }
 
-        public async Task<Noticia?> GetPerson(int personId)
+        public async Task<Noticia?> GetPerson(int noticiaId)
         {
             var result = await _appDbContext.Noticia
                 .Include(p => p.Addresses)
-                .FirstOrDefaultAsync(p => p.PersonId==personId);
+                .FirstOrDefaultAsync(p => p.NoticiaId == noticiaId);
             if (result != null)
             {
                 return result;
@@ -57,16 +57,16 @@ namespace Blazorcrud.Server.Models
             if (name != null)
             {
                 return _appDbContext.Noticia
-                    .Where(p => p.FirstName.Contains(name, StringComparison.CurrentCultureIgnoreCase) ||
-                        p.LastName.Contains(name, StringComparison.CurrentCultureIgnoreCase))
-                    .OrderBy(p => p.PersonId)
+                    .Where(p => p.Titulo.Contains(name, StringComparison.CurrentCultureIgnoreCase) ||
+                        p.Body.Contains(name, StringComparison.CurrentCultureIgnoreCase))
+                    .OrderBy(p => p.NoticiaId)
                     .Include(p => p.Addresses)
                     .GetPaged(page, pageSize);
             }
             else
             {
                 return _appDbContext.Noticia
-                    .OrderBy(p => p.PersonId)
+                    .OrderBy(p => p.NoticiaId)
                     .Include(p => p.Addresses)
                     .GetPaged(page, pageSize);
             }
@@ -74,7 +74,7 @@ namespace Blazorcrud.Server.Models
 
         public async Task<Noticia?> UpdatePerson(Noticia person)
         {
-            var result = await _appDbContext.Noticia.Include("Addresses").FirstOrDefaultAsync(p => p.PersonId==person.PersonId);
+            var result = await _appDbContext.Noticia.Include("Addresses").FirstOrDefaultAsync(p => p.NoticiaId == person.NoticiaId);
             if (result!=null)
             {
                 // Update existing person
