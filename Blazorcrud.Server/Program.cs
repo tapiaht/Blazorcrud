@@ -8,15 +8,20 @@ using System.Reflection;
 using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
+string connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("BlazorServerCRUD"));
+//builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("BlazorServerCRUD"));
 builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connString);
+});
 
 builder.Services.AddSwaggerGen(c =>
 {

@@ -1,6 +1,7 @@
 using Blazorcrud.Shared.Data;
 using Blazorcrud.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Blazorcrud.Server.Models
 {
@@ -52,9 +53,11 @@ namespace Blazorcrud.Server.Models
         public PagedResult<Noticia> GetPeople(string? name, int page)
         {
             int pageSize = 5;
-            
+
             if (name != null)
             {
+                Debug.Print("estoy aqui");
+
                 return _appDbContext.Noticia
                     .Where(p => p.Titulo.Contains(name, StringComparison.CurrentCultureIgnoreCase) ||
                         p.Body.Contains(name, StringComparison.CurrentCultureIgnoreCase))
@@ -63,15 +66,24 @@ namespace Blazorcrud.Server.Models
             }
             else
             {
+                Debug.Print("por else xxxxxxxxxxxxxxxxxxxxxxzXXXXXXXXXXXXXXXXXXXXXx");
+
                 return _appDbContext.Noticia
-                    .OrderBy(p => p.NoticiaId)
+                       .Select(t => new Noticia
+                       {
+                           NoticiaId = t.NoticiaId,
+                           Titulo = t.Titulo,
+                           Body = t.Body,
+                           IdCategoria = t.IdCategoria
+                       })
+                     .OrderBy(p => p.NoticiaId)
                     .GetPaged(page, pageSize);
-            }
+             }   
         }
 
         public async Task<Noticia?> UpdatePerson(Noticia person)
         {
-            var result = await _appDbContext.Noticia.Include("Addresses").FirstOrDefaultAsync(p => p.NoticiaId == person.NoticiaId);
+            var result = await _appDbContext.Noticia.Include("Categoria").FirstOrDefaultAsync(p => p.NoticiaId == person.NoticiaId);
             if (result!=null)
             {
                 // Update existing person

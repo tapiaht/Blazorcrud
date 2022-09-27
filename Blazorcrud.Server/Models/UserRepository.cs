@@ -19,7 +19,7 @@ namespace Blazorcrud.Server.Models
 
         public AuthenticateResponse Authenticate(AuthenticateRequest request)
     {
-        var _user = _appDbContext.Users.SingleOrDefault(u => u.Username == request.Username);
+        var _user = _appDbContext.User.SingleOrDefault(u => u.Username == request.Username);
 
         // validate
         if (_user == null || !BCrypt.Net.BCrypt.Verify(request.Password, _user.PasswordHash))
@@ -41,7 +41,7 @@ namespace Blazorcrud.Server.Models
 
             if (name != null)
             {
-                return _appDbContext.Users
+                return _appDbContext.User
                     .Where(u => u.FirstName.Contains(name, StringComparison.CurrentCultureIgnoreCase) ||
                         u.LastName.Contains(name, StringComparison.CurrentCultureIgnoreCase) || 
                         u.Username.Contains(name, StringComparison.CurrentCultureIgnoreCase))
@@ -50,7 +50,7 @@ namespace Blazorcrud.Server.Models
             }
             else
             {
-                return _appDbContext.Users
+                return _appDbContext.User
                     .OrderBy(u => u.Username)
                     .GetPaged(page, pageSize);
             }
@@ -58,7 +58,7 @@ namespace Blazorcrud.Server.Models
 
         public async Task<User?> GetUser(int Id)
         {
-            var result = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Id==Id);
+            var result = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id==Id);
             if (result != null)
             {
                 return result;
@@ -72,7 +72,7 @@ namespace Blazorcrud.Server.Models
         public async Task<User> AddUser(User user)
         {
             // validate unique
-            if (_appDbContext.Users.Any(u => u.Username == user.Username))
+            if (_appDbContext.User.Any(u => u.Username == user.Username))
                 throw new AppException("Username '" + user.Username + "' is already taken");
 
             // hash password
@@ -80,21 +80,21 @@ namespace Blazorcrud.Server.Models
             Console.WriteLine(user.Password + " ==> " + user.PasswordHash);
             user.Password = "**********";
             
-            var result = await _appDbContext.Users.AddAsync(user);
+            var result = await _appDbContext.User.AddAsync(user);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;
         }
 
         public async Task<User?> UpdateUser(User user)
         {
-            var result = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Id==user.Id);
+            var result = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id==user.Id);
 
             // cannot update admin
             if (result.Username == "admin")
                 throw new AppException("Admin may not be updated");
 
             // validate unique
-            if (user.Username != result.Username && _appDbContext.Users.Any(u => u.Username == user.Username))
+            if (user.Username != result.Username && _appDbContext.User.Any(u => u.Username == user.Username))
                 throw new AppException("Username '" + user.Username + "' is already taken");
 
             // hash password if entered
@@ -119,7 +119,7 @@ namespace Blazorcrud.Server.Models
 
         public async Task<User?> DeleteUser(int Id)
         {
-            var result = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Id==Id);
+            var result = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id==Id);
 
             // cannot delete admin
             if (result.Username == "admin")
@@ -127,7 +127,7 @@ namespace Blazorcrud.Server.Models
                 
             if (result!=null)
             {
-                _appDbContext.Users.Remove(result);
+                _appDbContext.User.Remove(result);
                 await _appDbContext.SaveChangesAsync();
             }
             else

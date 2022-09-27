@@ -10,16 +10,13 @@ namespace Blazorcrud.Server.Models
             Randomizer.Seed = new Random(32321);
             if (!(appDbContext.Noticia.Any()))
                 {
-                    
 
-                    // Create new people
-                    var testPeople = new Faker<Blazorcrud.Shared.Models.Noticia>()
-                        .RuleFor(p => p.Titulo, f => f.Lorem.Lines(1))
-                        .RuleFor(p => p.Body, f => f.Lorem.Lines(5))
-                        
-                        .RuleFor(p => p.IdCategoria, f => f.Random.Number(15).ToString()
-                        )
-                        ;
+
+                // Create new people
+                var testPeople = new Faker<Blazorcrud.Shared.Models.Noticia>()
+                    .RuleFor(p => p.Titulo, f => f.Lorem.Lines(1))
+                    .RuleFor(p => p.Body, f => f.Lorem.Lines(5))
+                    .RuleFor(p => p.IdCategoria, f => f.Random.Number(15));
                         
                     var people = testPeople.Generate(25);
 
@@ -47,7 +44,7 @@ namespace Blazorcrud.Server.Models
                 appDbContext.SaveChanges();
             }
 
-            if (!(appDbContext.Users.Any()))
+            if (!(appDbContext.User.Any()))
             {
                 var testUsers = new Faker<User>()
                     .RuleFor(u => u.FirstName, u => u.Name.FirstName())
@@ -69,7 +66,7 @@ namespace Blazorcrud.Server.Models
                 {
                     u.PasswordHash = BCrypt.Net.BCrypt.HashPassword(u.Password);
                     u.Password = "**********";
-                    appDbContext.Users.Add(u);
+                    appDbContext.User.Add(u);
                 }
                 appDbContext.SaveChanges();
             }

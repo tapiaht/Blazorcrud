@@ -21,8 +21,8 @@
         <div>
             <label>Categoria  :</label>
             <div>
-                <InputText @bind-Value="@person.IdCategoria" class="form-control col-sm-3" />
-                <ValidationMessage For="@(() => person.IdCategoria)" />
+                <InputNumber @bind-Value="@person.IdCategoria" class="form-control col-sm-3" />
+                @*<ValidationMessage For="@(() => person.IdCategoria)" />*@
             </div>
         </div>
     </div>

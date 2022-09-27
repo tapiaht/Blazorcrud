@@ -39,8 +39,8 @@ else
         <thead>
             <tr>
                 <th style="width:35%">Nombre</th>
-                <th style="width:30%">Uploaded</th>
-                <th style="width:30%">Processed</th>
+                <th style="width:30%">Fografia</th>
+                
                 <th style="width:5%"></th>
             </tr>
         </thead>
@@ -50,9 +50,7 @@ else
                 <tr>
                     <td>@upload.Nombre</td>
                     <td>@upload.Foto</td>
-                    <td style="white-space: nowrap">
-                        <NavLink href="@($"/upload/viewupload/{upload.Id}")" class="oi oi-eye text-primary mr-3 nounderline"></NavLink>
-                    </td>
+                
                 </tr> 
             }
         </tbody>
