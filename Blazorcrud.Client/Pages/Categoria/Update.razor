@@ -1,0 +1,50 @@
+﻿@*@page "/user/updateuser/{id}"*@
+@page "/upload/updateupload/{id}"
+@attribute [Authorize]
+@inject IAlertService AlertService
+@inject ICategoriaService UploadService
+@inject NavigationManager navManager
+@inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
+
+<h1>Actualizar Categoria</h1>
+<br/>
+
+<Form ButtonText="Update Categoria" categoria="@categoria" loading="@loading"
+            OnValidSubmit="@UpdateUpload" />
+
+
+@code {
+    bool loading = false;
+    
+    [Parameter]
+    public string Id { get; set; }
+
+    Categoria categoria= new Categoria();
+    
+    protected async override Task OnParametersSetAsync()
+    {
+        categoria = await UploadService.GetUpload(int.Parse(Id));
+    }
+
+    async Task UpdateUpload()
+    {
+        loading = true;
+        try
+        {
+            await UploadService.UpdateUpload(categoria);
+            AlertService.Success("User updated successfully", keepAfterRouteChange: true);
+            if (PageHistoryState.CanGoBack()){
+                navManager.NavigateTo(PageHistoryState.GetGoBackPage());
+            }
+            else{
+                navManager.NavigateTo("/upload/1");
+            } 
+        }
+        catch (Exception ex)
+        {
+            AlertService.Error(ex.Message);
+            loading = false;
+            StateHasChanged();
+        }
+    }
+}

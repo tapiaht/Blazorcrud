@@ -10,7 +10,7 @@ namespace Blazorcrud.Shared.Models
 
             RuleFor(upload => upload.Nombre).NotEmpty().WithMessage("File name is a required field.")
                 .Length(5, 50).WithMessage("File name must be between 5 and 50 characters.");
-            RuleFor(upload => upload.Foto).NotEmpty().WithMessage("Uploaded file is required.");
+            //RuleFor(upload => upload.Foto).NotEmpty().WithMessage("Uploaded file is required.");
         }
     }
 }

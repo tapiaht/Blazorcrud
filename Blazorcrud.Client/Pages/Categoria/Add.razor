@@ -5,7 +5,7 @@
 @inject NavigationManager navManager
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 
-<h1>Create Upload</h1>
+<h1>Crear Categoria</h1>
 <br/>
 
 <EditForm Model="@upload" OnValidSubmit="@CreateUpload">
@@ -21,8 +21,9 @@
         <div>
             <label>Foto:</label>
             <div>
-                <InputFile accept=".json" class="form-control-file" type="file" OnChange="HandleSelection" />
+                <InputText @bind-Value="@upload.Foto" class="form-control col-sm-3" />
                 <ValidationMessage For="@(() => upload.Foto)" />
+                
             </div>
         </div>
     </div>
@@ -54,21 +55,10 @@
     Categoria upload = new Categoria
     {
         Nombre = "",
-            Foto= "",
+            Foto= ""
     };
 
-    async Task HandleSelection(InputFileChangeEventArgs e)
-    {
-        var file = e.File;
-        if (file != null)
-        {
-            // Load into memory
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-            status = $"Finished loading {file.Size} bytes from {file.Name}";
-            upload.Foto = Convert.ToBase64String(buffer);
-        }
-    }
+    
 
     async Task CreateUpload()
     {
