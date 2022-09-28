@@ -39,9 +39,17 @@ namespace Blazorcrud.Server.Models
         public async Task<Noticia?> GetPerson(int noticiaId)
         {
             var result = await _appDbContext.Noticia
+                .Select(t => new Noticia
+                {
+                    NoticiaId = t.NoticiaId,
+                    Titulo = t.Titulo,
+                    Body = t.Body,
+                    IdCategoria = t.IdCategoria
+                })
                 .FirstOrDefaultAsync(p => p.NoticiaId == noticiaId);
             if (result != null)
             {
+                //Debug.Print("EStoy aqui pero no ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZz");
                 return result;
             }
             else
@@ -83,7 +91,10 @@ namespace Blazorcrud.Server.Models
 
         public async Task<Noticia?> UpdatePerson(Noticia person)
         {
-            var result = await _appDbContext.Noticia.Include("Categoria").FirstOrDefaultAsync(p => p.NoticiaId == person.NoticiaId);
+            //var result = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id == user.Id);
+            var result = await _appDbContext.Noticia
+                               
+                .Include("Categoria").FirstOrDefaultAsync(p => p.NoticiaId == person.NoticiaId);
             if (result!=null)
             {
                 // Update existing person

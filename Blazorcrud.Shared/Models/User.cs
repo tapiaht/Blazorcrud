@@ -13,5 +13,6 @@ namespace Blazorcrud.Shared.Models
         public bool IsDeleting {get; set;} = default!;
         [JsonIgnore]
         public string? PasswordHash {get; set;}
+
     }
 }
