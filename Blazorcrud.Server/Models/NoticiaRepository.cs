@@ -14,14 +14,14 @@ namespace Blazorcrud.Server.Models
             _appDbContext = appDbContext;
         }
 
-        public async Task<Noticia> AddPerson(Noticia person)
+        public async Task<Noticia> AddNoticia(Noticia noticia)
         {
-            var result = await _appDbContext.Noticia.AddAsync(person);
+            var result = await _appDbContext.Noticia.AddAsync(noticia);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;
         }
 
-        public async Task<Noticia?> DeletePerson(int noticiaId)
+        public async Task<Noticia?> DeleteNoticia(int noticiaId)
         {
             var result = await _appDbContext.Noticia.FirstOrDefaultAsync(p => p.NoticiaId == noticiaId);
             if (result!=null)
@@ -31,21 +31,21 @@ namespace Blazorcrud.Server.Models
             }
             else
             {
-                throw new KeyNotFoundException("Person not found");
+                throw new KeyNotFoundException("noticia not found");
             }
             return result;
         }
 
-        public async Task<Noticia?> GetPerson(int noticiaId)
+        public async Task<Noticia?> GetNoticia(int noticiaId)
         {
             var result = await _appDbContext.Noticia
-                .Select(t => new Noticia
-                {
-                    NoticiaId = t.NoticiaId,
-                    Titulo = t.Titulo,
-                    Body = t.Body,
-                    IdCategoria = t.IdCategoria
-                })
+                //.Select(t => new Noticia
+                //{
+                //    NoticiaId = t.NoticiaId,
+                //    Titulo = t.Titulo,
+                //    Body = t.Body,
+                //    IdCategoria = t.IdCategoria
+                //})
                 .FirstOrDefaultAsync(p => p.NoticiaId == noticiaId);
             if (result != null)
             {
@@ -54,11 +54,11 @@ namespace Blazorcrud.Server.Models
             }
             else
             {
-                throw new KeyNotFoundException("Person not found");
+                throw new KeyNotFoundException("noticia not found");
             }
         }
 
-        public PagedResult<Noticia> GetPeople(string? name, int page)
+        public PagedResult<Noticia> GetNoticia(string? name, int page)
         {
             int pageSize = 5;
 
@@ -89,23 +89,25 @@ namespace Blazorcrud.Server.Models
              }   
         }
 
-        public async Task<Noticia?> UpdatePerson(Noticia person)
+        public async Task<Noticia?> UpdateNoticia(Noticia noticia)
         {
-            //var result = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id == user.Id);
-            var result = await _appDbContext.Noticia
+            var result = await _appDbContext.Noticia.FirstOrDefaultAsync(u => u.NoticiaId== noticia.NoticiaId);
+            //var result = await _appDbContext.Noticia
                                
-                .Include("Categoria").FirstOrDefaultAsync(p => p.NoticiaId == person.NoticiaId);
+                //.Include("Categoria").FirstOrDefaultAsync(p => p.NoticiaId == noticia.NoticiaId);
             if (result!=null)
             {
-                // Update existing person
-                _appDbContext.Entry(result).CurrentValues.SetValues(person);
-                
-                
+                var currency1 = _appDbContext.Noticia.Find(noticia.NoticiaId);
+                currency1.Titulo = noticia.Titulo;
+                currency1.Body = noticia.Body;
+                Debug.Print("Al parecer hay datos     " + currency1.Titulo);
+                // Update existing noticia
+                _appDbContext.Entry(result).CurrentValues.SetValues(noticia);
                 await _appDbContext.SaveChangesAsync();
             }
             else
             {
-                throw new KeyNotFoundException("Person not found");
+                throw new KeyNotFoundException("noticia not found");
             }
             return result;
         }

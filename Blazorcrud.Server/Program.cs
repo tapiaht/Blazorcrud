@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(connString);
 });
+//builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("BlazorServerCRUD"));
 
 builder.Services.AddSwaggerGen(c =>
 {

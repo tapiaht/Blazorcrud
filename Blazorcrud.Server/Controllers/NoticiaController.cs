@@ -10,11 +10,11 @@ namespace Blazorcrud.Server.Controllers
     [Route("api/[controller]")]
     public class NoticiaController : ControllerBase
     {
-        private readonly INoticiaRepository _personRepository;
+        private readonly INoticiaRepository _noticiaRepository;
 
-        public NoticiaController(INoticiaRepository personRepository)
+        public NoticiaController(INoticiaRepository noticiaRepository)
         {
-            _personRepository = personRepository;
+            _noticiaRepository = noticiaRepository;
         }
 
         /// <summary>
@@ -24,44 +24,44 @@ namespace Blazorcrud.Server.Controllers
         [HttpGet]
         public ActionResult GetPeople([FromQuery] string? name, int page)
         {
-            return Ok(_personRepository.GetPeople(name, page));
+            return Ok(_noticiaRepository.GetNoticia(name, page));
         }
 
         /// <summary>
-        /// Gets a specific person by Id.
+        /// Gets a specific noticia by Id.
         /// </summary>
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetPerson(int id)
+        public async Task<ActionResult> Getnoticia(int id)
         {
-            return Ok(await _personRepository.GetPerson(id));
+            return Ok(await _noticiaRepository.GetNoticia(id));
         }
 
         /// <summary>
-        /// Creates a person with child addresses.
+        /// Creates a noticia with child addresses.
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult> AddPerson(Noticia person)
+        public async Task<ActionResult> Addnoticia(Noticia noticia)
         {
-            return Ok(await _personRepository.AddPerson(person));
+            return Ok(await _noticiaRepository.AddNoticia(noticia));
         }
         
         /// <summary>
-        /// Updates a person with a specific Id.
+        /// Updates a noticia with a specific Id.
         /// </summary>
         [HttpPut]
-        public async Task<ActionResult> UpdatePerson(Noticia person)
+        public async Task<ActionResult> Updatenoticia(Noticia noticia)
         {
-            return Ok(await _personRepository.UpdatePerson(person));
+            return Ok(await _noticiaRepository.UpdateNoticia(noticia));
         }
 
         /// <summary>
-        /// Deletes a person with a specific Id.
+        /// Deletes a noticia with a specific Id.
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeletePerson(int id)
+        public async Task<ActionResult> Deletenoticia(int id)
         {
-            return Ok(await _personRepository.DeletePerson(id));
+            return Ok(await _noticiaRepository.DeleteNoticia(id));
         }
     }
 }

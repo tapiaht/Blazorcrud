@@ -1,5 +1,4 @@
-﻿@page "/"
-@*@page "/upload/{Page}"*@
+﻿@page "/newsbycad/{Page}"
 
 @inject ICategoriaService UploadService
 @inject IUserService UserService
@@ -7,7 +6,7 @@
 @inject Microsoft.AspNetCore.Components.NavigationManager UriHelper
 @inject Blazorcrud.Client.Shared.PageHistoryState PageHistoryState
 @inject NavigationManager navManager
-<h1>Categorias</h1>
+<h1>Noticias por Categoria</h1>
 <br />
 
 @if (uploads == null)

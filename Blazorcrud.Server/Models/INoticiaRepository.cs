@@ -5,10 +5,10 @@ namespace Blazorcrud.Server.Models
 {
     public interface INoticiaRepository
     {
-        PagedResult<Noticia> GetPeople(string? name, int page);
-        Task<Noticia?> GetPerson(int noticiaId);
-        Task<Noticia> AddPerson(Noticia person);
-        Task<Noticia?> UpdatePerson(Noticia person);
-        Task<Noticia?> DeletePerson(int noticiaId);
+        PagedResult<Noticia> GetNoticia(string? name, int page);
+        Task<Noticia?> GetNoticia(int noticiaId);
+        Task<Noticia> AddNoticia(Noticia noticia);
+        Task<Noticia?> UpdateNoticia(Noticia noticia);
+        Task<Noticia?> DeleteNoticia(int noticiaId);
     }
 }

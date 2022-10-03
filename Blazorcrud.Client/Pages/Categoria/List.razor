@@ -55,7 +55,9 @@ else
                         @if (LoggedIn)
                         {
                             <NavLink href="@($"/upload/updateupload/{upload.Id}")" class="oi oi-pencil text-warning mr-2 nounderline"></NavLink>
-                            <NavLink href="@($"/upload/deleteupload/{upload.Id}")" class="btn btn-link oi oi-trash text-danger mr-1 nounderline"></NavLink>
+                            <button @onclick="@(() => DeletePerson(upload))" class=" btn btn-link oi oi-trash text-danger mr-1 nounderline">
+                                <span class="spinner-border spinner-border-sm"></span>
+                            </button>
                         }
                     </td>
                 </tr> 
@@ -114,4 +116,12 @@ else
         UriHelper.NavigateTo("/upload/" + page);
         PageHistoryState.AddPageToHistory(UriHelper.Uri);
     }    
+    private async void DeletePerson(Categoria _upload)
+    {
+        var upload = _upload;
+       
+        await UploadService.DeleteUpload(upload.Id);
+        uploads = await UploadService.GetUploads(null, Page);
+        StateHasChanged();
+    }
 }

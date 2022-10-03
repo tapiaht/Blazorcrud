@@ -1,5 +1,6 @@
 using Blazorcrud.Shared.Models;
 using Bogus;
+using System.Diagnostics;
 
 namespace Blazorcrud.Server.Models
 {
@@ -7,7 +8,9 @@ namespace Blazorcrud.Server.Models
     {
         public static void Initialize(AppDbContext appDbContext)
         {
+            
             Randomizer.Seed = new Random(32321);
+            Debug.Print("Aqui pasa algo");
             if (!(appDbContext.Noticia.Any()))
                 {
 
@@ -18,7 +21,7 @@ namespace Blazorcrud.Server.Models
                     .RuleFor(p => p.Body, f => f.Lorem.Lines(5))
                     .RuleFor(p => p.IdCategoria, f => f.Random.Number(15));
                         
-                    var people = testPeople.Generate(25);
+                    var people = testPeople.Generate(255);
 
                     foreach (Blazorcrud.Shared.Models.Noticia p in people)
                     {
@@ -35,7 +38,7 @@ namespace Blazorcrud.Server.Models
                 var testUploads = new Faker<Categoria>()
                     .RuleFor(u => u.Nombre, u => u.Commerce.Product())
                     .RuleFor(u => u.Foto, u => u.Commerce.ProductDescription());
-                var uploads = testUploads.Generate(8);
+                var uploads = testUploads.Generate(20);
 
                 foreach (Categoria u in uploads)
                 {
@@ -51,7 +54,7 @@ namespace Blazorcrud.Server.Models
                     .RuleFor(u => u.LastName, u => u.Name.LastName())
                     .RuleFor(u => u.Username, u => u.Internet.UserName())
                     .RuleFor(u => u.Password, u => u.Internet.Password());
-                var users = testUsers.Generate(4);
+                var users = testUsers.Generate(100);
 
                 User customUser = new User(){
                     FirstName = "Terry",
